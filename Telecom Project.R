@@ -26,38 +26,38 @@ str(mo)
 }
 
 #----------------------------------------------------------------------------------#
-#                             Creating DQR                                         #
+#                      Creating Data Quality Report                                #
 #----------------------------------------------------------------------------------#
 
 {
-VarName<-names(mo) #creating Variable Names for dataframe qlty
-qlty<-as.data.frame(VarName) #making dataframe qlty
-qlty$ClassType<-sapply(mo, class) #adding class type to dataframe qlty
-qlty$NoofRecs<-nrow(mo) #adding number of records to dataframe qlty
+VarName<-names(mo)                    #creating Variable Names for dataframe qlty
+qlty<-as.data.frame(VarName)          #making dataframe qlty
+qlty$ClassType<-sapply(mo, class)     #adding class type to dataframe qlty
+qlty$NoofRecs<-nrow(mo)               #adding number of records to dataframe qlty
 
 str(mo)
 
-for(i in 1:ncol(mo))# this is a loop for counting unique values to add to dataframe qlty
+for(i in 1:ncol(mo))       # this is a loop for counting unique values to add to dataframe qlty
 {
-  qlty$UniqueRecs[i]            <-length(unique(mo[,i]))
-  qlty$AvailbleRecs[i]          <-colSums(!is.na(mo[i]))
-  qlty$AvailbleRecPercent[i]    <-round(qlty$AvailbleRecs[i] / qlty$NoofRecs[i],2)
-  qlty$Missing[i]               <-colSums(is.na(mo[i]))
-  qlty$MissingPercent[i]        <-round(qlty$Missing[i] / qlty$NoofRecs[i],2)
-  qlty$Minimum[i]               <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',min(mo[,i],na.rm = T),0),2)
-  qlty$Maximum[i]               <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',max(mo[,i],na.rm=T),0),2)  
-  qlty$Mean[i]                  <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',colMeans(mo[i], na.rm = T),0),2)
-  qlty$FifthPercentile[i]       <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.05,na.rm = T),0),2)
-  qlty$TenthPercentile[i]       <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.10,na.rm = T),0),2)
-  qlty$TwentyFifthPercentile[i] <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.25,na.rm = T),0),2)
-  qlty$FiftythPercentile[i]     <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.5,na.rm = T),0),2)
-  qlty$SeventyFifthPercentile[i]<-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.75,na.rm = T),0),2)
-  qlty$NinetythPercentile[i]    <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.90,na.rm = T),0),2)
-  qlty$NinetyFifthPercentile[i] <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.95,na.rm = T),0),2)
+  qlty$UniqueRecs[i]              <-length(unique(mo[,i]))
+  qlty$AvailbleRecs[i]            <-colSums(!is.na(mo[i]))
+  qlty$AvailbleRecPercent[i]      <-round(qlty$AvailbleRecs[i] / qlty$NoofRecs[i],2)
+  qlty$Missing[i]                 <-colSums(is.na(mo[i]))
+  qlty$MissingPercent[i]          <-round(qlty$Missing[i] / qlty$NoofRecs[i],2)
+  qlty$Minimum[i]                 <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',min(mo[,i],na.rm = T),0),2)
+  qlty$Maximum[i]                 <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',max(mo[,i],na.rm=T),0),2)  
+  qlty$Mean[i]                    <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',colMeans(mo[i], na.rm = T),0),2)
+  qlty$FifthPercentile[i]         <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.05,na.rm = T),0),2)
+  qlty$TenthPercentile[i]         <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.10,na.rm = T),0),2)
+  qlty$TwentyFifthPercentile[i]   <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.25,na.rm = T),0),2)
+  qlty$FiftythPercentile[i]       <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.5,na.rm = T),0),2)
+  qlty$SeventyFifthPercentile[i]  <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.75,na.rm = T),0),2)
+  qlty$NinetythPercentile[i]      <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.90,na.rm = T),0),2)
+  qlty$NinetyFifthPercentile[i]   <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.95,na.rm = T),0),2)
   qlty$NinetyEightthPercentile[i] <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.98,na.rm = T),0),2)
-  qlty$NinetyNinethPercentile[i] <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.99,na.rm = T),0),2)
+  qlty$NinetyNinethPercentile[i]  <-round(ifelse(class(mo[,i])=='integer' | class(mo[,i])=='numeric',quantile(mo[i],p=0.99,na.rm = T),0),2)
 }
-
+# export qlty to excel file to check how the data is spread, how many missing values in how many variables.
 write.csv(qlty, "DQR.csv",row.names = F)
 }
 
@@ -65,10 +65,12 @@ str(mo)
 
 #----------------------------------------------------------------------------------#
 #             Merging variables to create new derived variable                     #
+#       we can derive at new variables by clubbing certain existing variables      #
 #----------------------------------------------------------------------------------#
 
 mo$compcalls_Mean<-mo$comp_dat_Mean+mo$comp_vce_Mean
 mo$plcdcalls_Mean<-mo$plcd_dat_Mean+mo$plcd_vce_Mean
+
 names(mo)
 
 #----------------------------------------------------------------------------------#
